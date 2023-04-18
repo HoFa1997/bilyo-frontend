@@ -1,5 +1,6 @@
 import { IInvoice, IResponse } from "@/interface/type";
-import { instanseAxios } from "../axios.config";
+import instanseAxios from "../axios.config";
+
 import { HOST_URI } from "@/utils/constant";
 
 export const getAllInvoice = async () => {

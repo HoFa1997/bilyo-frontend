@@ -1,4 +1,4 @@
-import { useLogout } from "@/api/mutation/auth";
+import { tokenKey } from "@/api/axios.config";
 import {
   IconButton,
   Box,
@@ -17,7 +17,6 @@ interface IProps {
   user: string | undefined;
 }
 const LogoutComp: React.FC<IProps> = ({ user }) => {
-  const { mutateAsync } = useLogout();
   const { push } = useRouter();
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
@@ -30,19 +29,6 @@ const LogoutComp: React.FC<IProps> = ({ user }) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  const DashboardSetting = [
-    {
-      title: "پروفایل",
-      link: "/",
-      func: push,
-    },
-    {
-      title: "خروج",
-      link: null,
-      func: mutateAsync,
-    },
-  ];
 
   return (
     <>
@@ -66,14 +52,17 @@ const LogoutComp: React.FC<IProps> = ({ user }) => {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
-          {DashboardSetting.map((setting) => (
-            <MenuItem
-              key={setting.title}
-              // onClick={() => setting.func(setting.link)}
-            >
-              <Typography textAlign="center">{setting.title}</Typography>
-            </MenuItem>
-          ))}
+          <MenuItem onClick={() => localStorage.removeItem(tokenKey)}>
+            <Typography textAlign="center">پروفایل</Typography>
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              localStorage.removeItem(tokenKey);
+              push("/");
+            }}
+          >
+            <Typography textAlign="center">خروج</Typography>
+          </MenuItem>
         </Menu>
       </Box>
     </>

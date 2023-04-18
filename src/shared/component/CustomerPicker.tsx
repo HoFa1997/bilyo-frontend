@@ -4,33 +4,33 @@ import {
   List,
   ListItem,
   Paper,
-  Skeleton,
   TextField,
   Typography,
 } from "@mui/material";
 import { useGetAllCustomers } from "@/api/query/customer";
-import { ICustomer, IInvoice } from "@/interface/type";
+import { ICustomer } from "@/interface/type";
 import { motion } from "framer-motion";
 import { useFormContext } from "react-hook-form";
+import Loading from "./Loading";
 
 const CustomerPicker: React.FC = () => {
-  const { setValue } = useFormContext<IInvoice>();
-  // const [q, setQ] = React.useState<number>(0);
+  const { setValue } = useFormContext<{ customer: { id: string } }>();
 
   const [selectedInvoice, setSelectedInvoice] = React.useState<ICustomer>();
 
-  const handleInvoiceChange = (
-    event: React.SyntheticEvent,
-    newValue: ICustomer
-  ) => {
-    setValue("customer", {
-      id: newValue.id,
-    });
-    setSelectedInvoice(newValue);
-  };
+  const { data: customerData, isLoading } = useGetAllCustomers();
 
-  const { data: customerData, isLoading: customerLoading } =
-    useGetAllCustomers();
+  if (isLoading) return <Loading />;
+  if (!customerData) return <>ERROR</>;
+
+  const handleInvoiceChange = (newValue: ICustomer | undefined) => {
+    if (newValue) {
+      setValue("customer", {
+        id: newValue._id,
+      });
+      setSelectedInvoice(newValue);
+    }
+  };
 
   const CustomerKeyTypo: React.FC<{ text: string }> = ({ text }) => (
     <Typography variant="label3">{text + " : "}</Typography>
@@ -42,21 +42,15 @@ const CustomerPicker: React.FC = () => {
 
   return (
     <>
-      {/* {customerLoading ? (
-        <Skeleton variant="rectangular" width={210} height={118} />
-      ) : (
-        <Autocomplete
-          options={customerData}
-          getOptionLabel={(customer) =>
-            `${customer.first_name}-${customer.last_name}-${customer.phone_number}`
-          }
-          value={selectedInvoice}
-          onChange={handleInvoiceChange}
-          renderInput={(params) => (
-            <TextField {...params} label="انتخاب مشتری" />
-          )}
-        />
-      )} */}
+      <Autocomplete
+        options={customerData}
+        getOptionLabel={(customer) =>
+          `${customer.first_name}-${customer.last_name}-${customer.phone_number}`
+        }
+        value={selectedInvoice}
+        onChange={() => handleInvoiceChange(selectedInvoice)}
+        renderInput={(params) => <TextField {...params} label="انتخاب مشتری" />}
+      />
       {selectedInvoice && (
         <motion.div initial={{ x: -100 }} animate={{ x: 0 }}>
           <Paper

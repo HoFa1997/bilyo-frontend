@@ -5,7 +5,7 @@ import {
   deleteProductByIdApi,
   updateProductByIdApi,
 } from "../uri/product";
-import { IProduct } from "@/interface/type";
+import { ICreateProduct, IProduct } from "@/interface/type";
 
 const productURL = "/dashboard/products";
 
@@ -14,7 +14,7 @@ export const useCreateProduct = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["createProduct"],
-    mutationFn: (product: IProduct) => createProductApi(product),
+    mutationFn: (product: ICreateProduct) => createProductApi(product),
     onSuccess(data) {
       queryClient.refetchQueries({ queryKey: ["getAllProduct"] });
       push(productURL);

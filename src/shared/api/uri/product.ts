@@ -1,6 +1,6 @@
 import { HOST_URI } from "@/utils/constant";
-import { instanseAxios } from "../axios.config";
-import { IProduct, IResponse } from "@/interface/type";
+import instanseAxios from "../axios.config";
+import { ICreateProduct, IProduct, IResponse } from "@/interface/type";
 
 export const getAllProductApi = async () => {
   try {
@@ -12,7 +12,7 @@ export const getAllProductApi = async () => {
   }
 };
 
-export const createProductApi = async (product: IProduct) => {
+export const createProductApi = async (product: ICreateProduct) => {
   try {
     return await instanseAxios.post<IResponse>(
       `${HOST_URI}/dashboard/products`,

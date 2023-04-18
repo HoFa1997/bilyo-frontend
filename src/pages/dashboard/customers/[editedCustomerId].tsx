@@ -1,5 +1,6 @@
 import { useUpdateCustomer } from "@/api/mutation/customer";
 import { useGetCustomerById } from "@/api/query/customer";
+import Loading from "@/component/Loading";
 import CustomerForm from "@/component/form/CustomerForm";
 import { ICustomer } from "@/interface/type";
 
@@ -13,23 +14,24 @@ const EditCustomerPage: React.FC = () => {
   const router = useRouter();
   const { editedCustomerId } = router.query;
   const id = editedCustomerId as string;
-  const { data, refetch } = useGetCustomerById(id);
+  const { data, refetch, isLoading: loading } = useGetCustomerById(id);
   const { mutateAsync, isLoading } = useUpdateCustomer();
-
   const method = useForm<ICustomer>({ values: data });
-
-  const onSubmit: SubmitHandler<ICustomer> = (updatedData) => {
-    mutateAsync({
-      id: data?.id!!,
-      customer: updatedData,
-    });
-  };
-
   React.useEffect(() => {
     if (router.asPath !== router.route) {
       refetch();
     }
   }, [refetch, router]);
+
+  if (loading) return <Loading />;
+  if (!data) return <>ERROR</>;
+
+  const onSubmit: SubmitHandler<ICustomer> = (updatedData) => {
+    mutateAsync({
+      id: data?._id,
+      customer: updatedData,
+    });
+  };
 
   return (
     <FormProvider {...method}>

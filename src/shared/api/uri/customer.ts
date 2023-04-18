@@ -1,6 +1,6 @@
 import { HOST_URI } from "@/utils/constant";
-import { instanseAxios } from "../axios.config";
 import { ICustomer, IResponse } from "@/interface/type";
+import instanseAxios from "../axios.config";
 
 export type IUpdateCustomer = {
   id: string;

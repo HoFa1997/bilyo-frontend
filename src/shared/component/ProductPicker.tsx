@@ -14,6 +14,7 @@ import { motion } from "framer-motion";
 import { useFormContext } from "react-hook-form";
 import { useGetAllProduct } from "@/api/query/product";
 import { IInvoice, IInvoiceLineItem, IProduct } from "@/interface/type";
+import Loading from "./Loading";
 
 const ProductPicker: React.FC = () => {
   interface requestCreatInvoice {
@@ -22,40 +23,42 @@ const ProductPicker: React.FC = () => {
   }
   const { setValue } = useFormContext<IInvoice>();
   const [productNum, setProductNum] = React.useState<number>(0);
-  const [selectedProduct, setSelectedInvoice] = React.useState<IProduct | null>(
-    null
-  );
-
+  const [selectedProduct, setSelectedInvoice] = React.useState<IProduct>();
   const [productArry, setProducArry] = React.useState<requestCreatInvoice[]>(
     []
   );
+  const { data: productData, isLoading } = useGetAllProduct();
+
   React.useEffect(() => {
     setValue("lineItems", productArry as unknown as IInvoiceLineItem[]);
   }, [productArry, setValue]);
 
   React.useEffect(() => {
     setProductNum(0);
-    setSelectedInvoice(null);
+    setSelectedInvoice(undefined);
   }, [productArry]);
 
-  const handleProductChange = (
-    event: React.SyntheticEvent,
-    newValue: IProduct | null
-  ) => {
-    setSelectedInvoice(newValue);
+  if (isLoading) return <Loading />;
+  if (productData?.length === 0) return <>NO PRODUCT</>;
+  if (!productData) return <>ERROR</>;
+
+  const handleProductChange = (newValue: IProduct | undefined) => {
+    if (newValue) {
+      setSelectedInvoice(newValue);
+    }
   };
 
-  // const handleProductAdd = () => {
-  //   setProducArry((ps) => [
-  //     ...ps,
-  //     {
-  //       product: selectedProduct.id,
-  //       quantity: productNum,
-  //     },
-  //   ]);
-  // };
-
-  const { data: productData, isLoading: productLoading } = useGetAllProduct();
+  const handleProductAdd = (selectedProduct: IProduct | undefined) => {
+    if (selectedProduct) {
+      setProducArry((ps) => [
+        ...ps,
+        {
+          product: selectedProduct._id,
+          quantity: productNum,
+        },
+      ]);
+    }
+  };
 
   const CustomerKeyTypo: React.FC<{ text: string }> = ({ text }) => (
     <Typography variant="label3">{text + " : "}</Typography>
@@ -67,19 +70,14 @@ const ProductPicker: React.FC = () => {
 
   return (
     <>
-      {/* {productLoading ? (
-        <Skeleton variant="rectangular" width={210} height={118} />
-      ) : (
-        <Autocomplete
-          options={productData}
-          getOptionLabel={(product) => `${product.name}-${product.price}`}
-          value={selectedProduct}
-          onChange={handleProductChange}
-          renderInput={(params) => (
-            <TextField {...params} label="انتخاب محصول" />
-          )}
-        />
-      )} */}
+      <Autocomplete
+        options={productData}
+        getOptionLabel={(product) => `${product.name}-${product.price}`}
+        value={selectedProduct}
+        defaultValue={productData[0]}
+        onChange={() => handleProductChange(selectedProduct)}
+        renderInput={(params) => <TextField {...params} label="انتخاب محصول" />}
+      />
       {selectedProduct && (
         <motion.div initial={{ x: -100 }} animate={{ x: 0 }}>
           <Paper
@@ -103,16 +101,18 @@ const ProductPicker: React.FC = () => {
           </Paper>
         </motion.div>
       )}
-      {/* <Input
+      <Input
         endAdornment={
-          <IconButton onClick={() => handleProductAdd()}>+</IconButton>
+          <IconButton onClick={() => handleProductAdd(selectedProduct)}>
+            +
+          </IconButton>
         }
         sx={{ mt: 2 }}
         fullWidth
         type="number"
         value={productNum}
         onChange={(e) => setProductNum(+e.target.value)}
-      /> */}
+      />
     </>
   );
 };

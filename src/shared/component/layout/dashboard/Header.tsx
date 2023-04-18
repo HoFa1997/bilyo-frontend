@@ -1,34 +1,35 @@
-import * as React from 'react';
-import Box, { BoxProps } from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import { ListSubheader, styled } from '@mui/material';
-import { AppBar, Drawer, DrawerHeaderr } from '@/component/base';
-import { DashboardData } from '@/data/dashboardData';
-import Link from 'next/link';
-import { convertDateToPersian } from '@/utils/fun';
-import Collapse from '@mui/material/Collapse';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import { NavBarList, NavBarListItem } from '@/component/baseLayoutComponent';
-import { useRouter } from 'next/router';
-import LogoutComp from './logout';
-import { useLogout } from '@/api/mutation/auth';
-import { useValidatorQuery } from '@/api/query/auth';
+import * as React from "react";
+import Box, { BoxProps } from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import { ListSubheader, styled } from "@mui/material";
+import { AppBar, Drawer, DrawerHeaderr } from "@/component/base";
+import { DashboardData } from "@/data/dashboardData";
+import Link from "next/link";
+import { convertDateToPersian } from "@/utils/fun";
+import Collapse from "@mui/material/Collapse";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import { NavBarList, NavBarListItem } from "@/component/baseLayoutComponent";
+import { useRouter } from "next/router";
+import LogoutComp from "./logout";
+
+import { useValidatorQuery } from "@/api/query/auth";
+import { tokenKey } from "@/api/axios.config";
 
 const BoxFlexCenter = styled(Box)<BoxProps>(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'row',
+  display: "flex",
+  flexDirection: "row",
 
-  alignItems: 'center',
+  alignItems: "center",
 }));
 
 interface IHeaderProps {
@@ -36,9 +37,8 @@ interface IHeaderProps {
 }
 
 const HeaderDashboard: React.FC<IHeaderProps> = ({ children }) => {
-  const { mutate } = useLogout();
   const [openDrawer, setOpenDrawer] = React.useState(true);
-  const [openListItem, setOpenListItem] = React.useState<string>('');
+  const [openListItem, setOpenListItem] = React.useState<string>("");
   const { data, isLoading } = useValidatorQuery();
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
@@ -49,13 +49,13 @@ const HeaderDashboard: React.FC<IHeaderProps> = ({ children }) => {
   };
 
   const handleClickListItem = (title: string) => {
-    setOpenListItem(title === openListItem ? '' : title);
+    setOpenListItem(title === openListItem ? "" : title);
   };
   const { push } = useRouter();
   const today = convertDateToPersian(Date.now());
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
       <AppBar
         open={openDrawer}
         elevation={0}
@@ -72,7 +72,7 @@ const HeaderDashboard: React.FC<IHeaderProps> = ({ children }) => {
             edge="start"
             sx={{
               marginRight: 5,
-              ...(openDrawer && { display: 'none' }),
+              ...(openDrawer && { display: "none" }),
             }}
           >
             <MenuIcon />
@@ -87,7 +87,7 @@ const HeaderDashboard: React.FC<IHeaderProps> = ({ children }) => {
           </BoxFlexCenter>
           <LogoutComp
             openDrawer={openDrawer}
-            mutate={mutate}
+            mutate={() => localStorage.removeItem(tokenKey)}
             isLoading={isLoading}
             user={data?.data.message}
           />
@@ -123,16 +123,16 @@ const HeaderDashboard: React.FC<IHeaderProps> = ({ children }) => {
                 }}
                 sx={{
                   minHeight: 48,
-                  justifyContent: openDrawer ? 'initial' : 'center',
+                  justifyContent: openDrawer ? "initial" : "center",
                   bgcolor: (t) =>
-                    openListItem === item.title ? t.palette.violet[50] : 'none',
+                    openListItem === item.title ? t.palette.violet[50] : "none",
                 }}
               >
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
-                    mr: openDrawer ? 3 : 'auto',
-                    justifyContent: 'center',
+                    mr: openDrawer ? 3 : "auto",
+                    justifyContent: "center",
                   }}
                 >
                   {item.icon}
@@ -144,7 +144,7 @@ const HeaderDashboard: React.FC<IHeaderProps> = ({ children }) => {
                 {openDrawer && item.subItem && (
                   <ListItemIcon
                     sx={{
-                      justifyContent: 'flex-end',
+                      justifyContent: "flex-end",
                       opacity: openDrawer ? 1 : 0,
                       minWidth: 0,
                     }}
@@ -162,14 +162,14 @@ const HeaderDashboard: React.FC<IHeaderProps> = ({ children }) => {
                   <Link
                     key={subItem.link}
                     href={subItem.link}
-                    style={{ textDecoration: 'none', color: 'inherit' }}
+                    style={{ textDecoration: "none", color: "inherit" }}
                   >
                     <Collapse
                       sx={{
                         bgcolor: (t) =>
                           openListItem === item.title
                             ? t.palette.violet[50]
-                            : 'none',
+                            : "none",
                       }}
                       key={subItem.link}
                       in={openListItem === item.title}
@@ -180,15 +180,15 @@ const HeaderDashboard: React.FC<IHeaderProps> = ({ children }) => {
                         <ListItemButton
                           sx={{
                             minHeight: 48,
-                            justifyContent: openDrawer ? 'initial' : 'center',
-                            pl: openDrawer ? 4 : 'auto',
+                            justifyContent: openDrawer ? "initial" : "center",
+                            pl: openDrawer ? 4 : "auto",
                           }}
                         >
                           <ListItemIcon
                             sx={{
                               minWidth: 0,
-                              mr: openDrawer ? 3 : 'auto',
-                              justifyContent: 'center',
+                              mr: openDrawer ? 3 : "auto",
+                              justifyContent: "center",
                             }}
                           >
                             {subItem.icon}

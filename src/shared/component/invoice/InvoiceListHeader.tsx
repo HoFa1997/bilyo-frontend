@@ -1,4 +1,4 @@
-import { trasnlateObjectKeys } from "@/utils/fun";
+import { translateCategory } from "@/utils/traslateTitle";
 import { TableCell, Typography } from "@mui/material";
 
 import React from "react";
@@ -13,7 +13,7 @@ const InvoiceListHeader: React.FC<InvoiceListHeaderProps> = ({
   return (
     <TableCell align="center">
       <Typography variant="title4" noWrap>
-        {/* {trasnlateObjectKeys[invoiceHeader]} */}
+        {translateCategory(invoiceHeader)}
       </Typography>
     </TableCell>
   );

@@ -1,20 +1,29 @@
 export interface IProduct {
+  _id: string;
   name: string;
   description: string;
   categories: string[];
   price: number;
   qty: number;
-  id?: string;
   createdAt?: string;
   updatedAt?: string;
 }
+
+type Optional<T, K extends keyof T> = Partial<Pick<T, K>> & Omit<T, K>;
+export type ICreateProduct = Optional<IProduct, "_id">;
 
 export interface IResponse {
   id: string;
   message: string;
 }
 
+export interface IAuthResponse {
+  token: string;
+  message: string;
+}
+
 export interface ICustomer {
+  _id: string;
   first_name: string;
   last_name: string;
   email: string;
@@ -25,23 +34,23 @@ export interface ICustomer {
   zip_code: string;
   date_of_birth: string;
   account_balance: number;
-  id: string;
+  __v: number;
 }
 
 export interface IInvoice {
+  _id: string;
   customer: {
-    id?: string;
-    first_name?: string;
-    last_name?: string;
-    phone_number?: string;
+    first_name: string;
+    last_name: string;
+    phone_number: string;
+    id: string;
   };
   lineItems: IInvoiceLineItem[];
-  status?: string;
-  totalAmount?: number;
-  invoiceNumber?: string;
-  date?: string;
-  dueDate?: string;
-  id?: string;
+  status: string;
+  totalAmount: number;
+  invoiceNumber: string;
+  date: string;
+  dueDate: string;
 }
 
 export interface IInvoiceLineItem {
@@ -51,8 +60,8 @@ export interface IInvoiceLineItem {
     price: number;
   };
   quantity: number;
-  totalPrice?: number;
-  id?: string;
+  totalPrice: number;
+  _id: string;
 }
 
 export interface IRegister {

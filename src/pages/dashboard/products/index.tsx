@@ -43,7 +43,7 @@ const ProductsPage: FC = () => {
             <TableBody>
               {data?.map(
                 ({
-                  id,
+                  _id,
                   name,
                   description,
                   categories,
@@ -52,7 +52,7 @@ const ProductsPage: FC = () => {
                   qty,
                 }) => (
                   <TableRow
-                    key={id}
+                    key={_id}
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                       bgcolor: (t) => t.palette.grey[100],
@@ -71,7 +71,7 @@ const ProductsPage: FC = () => {
                     <TableCell>{qty.toLocaleString("fa-ir")}</TableCell>
                     {/* <TableCell>{convertDateToPersian(updatedAt)}</TableCell> */}
                     <TableCell align="center">
-                      <Link href={`/dashboard/products/${id}`}>
+                      <Link href={`/dashboard/products/${_id}`}>
                         <IconButton color="warning">
                           <EditIcon />
                         </IconButton>

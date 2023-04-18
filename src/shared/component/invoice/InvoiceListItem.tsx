@@ -1,4 +1,5 @@
-import { convertDateToPersian, trasnlateObjectKeys } from "@/utils/fun";
+import { convertDateToPersian } from "@/utils/fun";
+import { translateCategory } from "@/utils/traslateTitle";
 import {
   TableRow,
   TableCell,
@@ -50,42 +51,42 @@ const InvoiceListItem: React.FC<InvoiceListItemProps> = ({
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  // const customerDataById = (invoiceData: IInvoice, invoiceItem: string) => {
-  //   if (invoiceItem === "customer") {
-  //     return `${invoiceData["customer"].first_name} ${invoiceData["customer"].last_name}`;
-  //   }
-  //   if (invoiceItem === "date" || invoiceItem === "dueDate") {
-  //     return convertDateToPersian(invoiceData[invoiceItem]);
-  //   }
-  //   if (invoiceItem === "status") {
-  //     return trasnlateObjectKeys[invoiceData[invoiceItem]];
-  //   }
-  //   if (invoiceItem === "lineItems") {
-  //     return;
-  //   }
-
-  //   return invoiceData[invoiceItem];
-  // };
+  const customerDataById = (invoiceData: IInvoice, invoiceItem: string) => {
+    type IInvoices = keyof IInvoice;
+    if (invoiceItem === "customer") {
+      return `${invoiceData["customer"].first_name} ${invoiceData["customer"].last_name}`;
+    }
+    if (invoiceItem === "date" || invoiceItem === "dueDate") {
+      return convertDateToPersian(invoiceData[invoiceItem]);
+    }
+    if (invoiceItem === "status") {
+      return translateCategory(invoiceData[invoiceItem]);
+    }
+    if (invoiceItem === "lineItems") {
+      return;
+    }
+    return invoiceData[invoiceItem as unknown as IInvoices];
+  };
 
   return (
     <>
       <TableRow>
         {header.map((header) => (
-          <TableCell align="center" key={`${invoice.id}-${header}`}>
+          <TableCell align="center" key={`${invoice._id}-${header}`}>
             <Typography variant="body5" noWrap>
-              {/* {customerDataById(invoice, header)} */}
+              {customerDataById(invoice, header)}
             </Typography>
           </TableCell>
         ))}
 
-        {/* <ActionCell id={invoice.id} handleExpandClick={handleExpandClick} /> */}
+        <ActionCell id={invoice._id} handleExpandClick={handleExpandClick} />
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             {invoice.lineItems.map((i, index) => (
               <Box
-                key={i.id}
+                key={i._id}
                 sx={{
                   p: 2,
                   display: "flex",
