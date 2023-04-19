@@ -123,7 +123,6 @@ const CustomerForm: React.FC = () => {
         value={value}
        
         onChange={(newValue) => {
-          console.log(value);
 
           return setValue(newValue);
         }}

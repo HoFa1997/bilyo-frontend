@@ -1,5 +1,4 @@
 import React from "react";
-
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -15,7 +14,7 @@ import useChipsArray from "@/component/productAddChip";
 import { useRouter } from "next/router";
 import ProductForm from "@/component/form/ProductForm";
 import { useCreateProduct } from "@/api/mutation/product";
-import { IProduct } from "@/interface/type";
+import { ICreateProduct } from "@/interface/type";
 
 const AddProductsPage: React.FC = () => {
   const { back } = useRouter();
@@ -23,8 +22,8 @@ const AddProductsPage: React.FC = () => {
   const [word, setWord] = React.useState<string>("");
   const { chipComponenet, handleAdd, resetChip, chipData } = useChipsArray();
 
-  const method = useForm<IProduct>();
-  const onSubmit: SubmitHandler<IProduct> = async ({
+  const method = useForm<ICreateProduct>();
+  const onSubmit: SubmitHandler<ICreateProduct> = async ({
     name,
     description,
     price,

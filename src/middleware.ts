@@ -6,7 +6,6 @@ import { tokenKey } from "@/api/axios.config";
 
 export async function middleware(request: NextRequest) {
   // const token = localStorage.getItem(tokenKey);
-  // console.log(token);
 
   // if (!token) {
   //   return NextResponse.redirect(new URL("/login", request.url));

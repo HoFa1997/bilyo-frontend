@@ -38,7 +38,7 @@ export const useUpdateProduct = () => {
   const { push } = useRouter();
   return useMutation({
     mutationKey: ["updateProduct"],
-    mutationFn: (data: { productId: string; data: IProduct }) =>
+    mutationFn: (data: { productId: string; data: ICreateProduct }) =>
       updateProductByIdApi({ productId: data.productId, product: data.data }),
     onSuccess(data) {
       queryClient.invalidateQueries({ queryKey: ["getAllProduct"] });

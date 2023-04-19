@@ -5,12 +5,15 @@ export interface IProduct {
   categories: string[];
   price: number;
   qty: number;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 type Optional<T, K extends keyof T> = Partial<Pick<T, K>> & Omit<T, K>;
-export type ICreateProduct = Optional<IProduct, "_id">;
+export type ICreateProduct = Optional<
+  IProduct,
+  "_id" | "createdAt" | "updatedAt"
+>;
 
 export interface IResponse {
   id: string;

@@ -17,43 +17,47 @@ import Loading from "@/component/Loading";
 import ProductForm from "@/component/form/ProductForm";
 import { useUpdateProduct } from "@/api/mutation/product";
 import { useGetProductById } from "@/api/query/product";
-import { IProduct } from "@/interface/type";
+import { ICreateProduct, IProduct } from "@/interface/type";
 
 const EditProductsPage: React.FC = () => {
   const router = useRouter();
   const { editedProductId } = router.query;
   const productId = editedProductId as string;
-  const { data, refetch, isLoading, status } = useGetProductById(productId);
   const [categories, setCategories] = React.useState<string[]>([]);
   const [word, setWord] = React.useState<string>("");
+  const { data, refetch, isLoading, status } = useGetProductById(productId);
 
-  // const { mutate } = useUpdateProduct();
-  // React.useEffect(() => {
-  //   if (router.asPath !== router.route) {
-  //     refetch();
-  //   }
-  // }, [refetch, router]);
+  const { mutate } = useUpdateProduct();
+  React.useEffect(() => {
+    if (router.asPath !== router.route) {
+      refetch();
+    }
+  }, [refetch, router]);
 
-  // React.useEffect(() => {
-  //   if (status === "success") {
-  //     setCategories(data?.categories);
-  //   }
-  // }, [data, status]);
+  React.useEffect(() => {
+    if (data) {
+      setCategories(data?.categories);
+    }
+  }, [data, status]);
 
-  const method = useForm<IProduct>({ values: data });
+  const method = useForm<ICreateProduct>({ values: data });
 
-  // const onSubmit: SubmitHandler<IProduct> = (data) => {
-  //   mutate({
-  //     productId: data.id,
-  //     data: {
-  //       name: data.name,
-  //       categories: categories,
-  //       description: data.description,
-  //       price: data.price,
-  //       qty: data.qty,
-  //     },
-  //   });
-  // };
+  if (isLoading) return <Loading />;
+  if (!data) return <Loading />;
+
+  const onSubmit: SubmitHandler<ICreateProduct> = (editedData) => {
+    const { name, categories, description, price, qty } = editedData;
+    mutate({
+      productId: data._id,
+      data: {
+        name: editedData.name,
+        categories: categories,
+        description,
+        price,
+        qty,
+      },
+    });
+  };
 
   const handleDelete = (chipToDelete: string) => () => {
     setCategories((chips) => chips.filter((chip) => chip !== chipToDelete));
@@ -65,11 +69,9 @@ const EditProductsPage: React.FC = () => {
     });
   };
 
-  if (isLoading) return <Loading />;
-
   return (
     <FormProvider {...method}>
-      {/* <Box
+      <Box
         component="form"
         noValidate
         autoComplete="off"
@@ -129,7 +131,7 @@ const EditProductsPage: React.FC = () => {
             </Button>
           </ButtonGroup>
         </Box>
-      </Box> */}
+      </Box>
     </FormProvider>
   );
 };

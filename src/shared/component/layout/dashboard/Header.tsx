@@ -24,6 +24,7 @@ import LogoutComp from "./logout";
 
 import { useValidatorQuery } from "@/api/query/auth";
 import { tokenKey } from "@/api/axios.config";
+import { version } from "@/utils/version";
 
 const BoxFlexCenter = styled(Box)<BoxProps>(({ theme }) => ({
   display: "flex",
@@ -207,6 +208,9 @@ const HeaderDashboard: React.FC<IHeaderProps> = ({ children }) => {
             </NavBarListItem>
           ))}
         </NavBarList>
+        <Box py={1} textAlign={"center"}>
+          v {version}
+        </Box>
       </Drawer>
       <Box
         sx={{

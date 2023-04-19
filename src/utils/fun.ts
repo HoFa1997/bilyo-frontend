@@ -4,7 +4,7 @@ export const uppercaseFirstPageRoute = (str: string) => {
   return splitedRoute[1].charAt(0).toUpperCase() + splitedRoute[1].slice(1);
 };
 
-export const convertDateToPersian = (rawDate: string | number) => {
+export const convertDateToPersian = (rawDate: string | number): string => {
   const date = new Date(rawDate);
   const timezone = "Asia/Tehran";
   return date.toLocaleDateString("fa-Ir", {

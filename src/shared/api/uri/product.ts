@@ -50,7 +50,7 @@ export const updateProductByIdApi = async ({
   product,
 }: {
   productId: string;
-  product: IProduct;
+  product: ICreateProduct;
 }) => {
   try {
     return (

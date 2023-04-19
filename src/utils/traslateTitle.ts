@@ -1,24 +1,4 @@
-interface TranslatedStrings {
-  address: string;
-  customer: string;
-  status: string;
-  totalAmount: string;
-  invoiceNumber: string;
-  date: string;
-  dueDate: string;
-  unpaid: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone_number: string;
-  state: string;
-  city: string;
-  zip_code: string;
-  date_of_birth: string;
-  account_balance: string;
-}
-
-const translations: TranslatedStrings = {
+const translations: any = {
   first_name: "نام",
   last_name: "نام خانوادگی",
   email: "ایمیل",
@@ -36,6 +16,13 @@ const translations: TranslatedStrings = {
   date: "تاریخ صدور",
   dueDate: "تاریخ انقضا",
   unpaid: "پرداخت نشده",
+  name: "نام",
+  description: "توضیحات",
+  categories: "دست بندی",
+  price: "قیمت",
+  qty: "تعداد انبار",
+  createdAt: "ساخته شده",
+  updatedAt: "بروزرسانی",
 };
 
 function capitalizeFirstLetter(str: string): string {
@@ -46,6 +33,5 @@ function capitalizeFirstLetter(str: string): string {
 }
 
 export const translateCategory = (category: string) => {
-  // @ts-ignore
   return translations[category] || category;
 };

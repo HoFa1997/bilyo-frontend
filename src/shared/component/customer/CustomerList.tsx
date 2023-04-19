@@ -2,7 +2,6 @@ import { useGetAllCustomers } from "@/api/query/customer";
 
 import {
   TableCell,
-  IconButton,
   TableContainer,
   Paper,
   Table,
@@ -17,12 +16,14 @@ import Loading from "../Loading";
 
 import CustomerListItem from "./CustomerListItem";
 import { translateCategory } from "@/utils/traslateTitle";
+import EmptyWithLable from "../EmptyWithLable";
 
 const ProductList: React.FC = () => {
   const { data, isLoading } = useGetAllCustomers();
 
   if (isLoading) return <Loading />;
-  if (data?.length === 0) return <>NO CUSTOMER</>;
+  if (data?.length === 0)
+    return <EmptyWithLable text={"مشتری ثبت نشده است. ثبت کنید"} />;
   if (!data) return <>ERROR</>;
 
   const header = Object.keys(data[0]);
