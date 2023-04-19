@@ -5,7 +5,7 @@
 
 - 👯 We are looking to collaborate on **Front and Back of Bilyo**
 
-- 📫 How to reach us **Hfatemi1997@gmail.com**
+- 📫 How to reach us **Hfatemi1997@gmail.com** &  **shayanwqhw@gmail.com**
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
