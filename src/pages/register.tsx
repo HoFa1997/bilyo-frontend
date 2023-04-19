@@ -3,23 +3,27 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { routeLinks, registerData } from "@/data/index";
 import { LoadingButton } from "@mui/lab";
-import { registerApi } from "@/api/uri/auth";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { IRegister } from "@/interface/type";
+import { useRegister } from "@/api/mutation/auth";
 
 const Register = () => {
   const { query, push } = useRouter();
   const backUrl = (query?.backUrl || "/") as string;
 
+  const { mutateAsync, isLoading } = useRegister();
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    reset,
+    formState: { errors },
   } = useForm<IRegister>();
   const onSubmit: SubmitHandler<IRegister> = async (data) => {
-    const a = await registerApi(data);
-    if (a?.message) {
-      push(backUrl);
+    try {
+      return mutateAsync(data);
+    } finally {
+      reset();
     }
   };
 
@@ -88,7 +92,7 @@ const Register = () => {
           />
 
           <LoadingButton
-            loading={isSubmitting}
+            loading={isLoading}
             type="submit"
             sx={{ mt: 3, font: "inherit" }}
             fullWidth
