@@ -67,37 +67,29 @@ const Login = () => {
             </Typography>
 
             <TextField
-              {...register("email", { required: "ایمیل وارد کنید" })}
-              error={Boolean(errors.email && errors.email)}
-              helperText={errors.email && errors.email.message}
-              sx={{ mt: 2 }}
-              size="small"
-              fullWidth
-              placeholder={loginData.emailPlaceholder}
-              type="email"
-            />
+            {...register("mobile", { required: "وارد کردن شماره الزامی است", pattern: {
+              value: /^(\+98|0)?9\d{9}$/,
+              message: "لطفا شماره موبایل معتبر وارد کنید"
+            } })}
+            error={Boolean(errors.mobile && errors.mobile)}
+            helperText={errors.mobile && errors.mobile.message}
+            sx={{ mt: 2 }}
+            size="small"
+            fullWidth
+            label={loginData.mobilePlaceholder}
+            type="text"
+          />
 
-            <OutlinedInput
-              {...register("password", { required: "رمز وارد کنید" })}
-              error={Boolean(errors.password && errors.password)}
-              sx={{ mt: 2 }}
-              size="small"
-              fullWidth
-              placeholder={loginData.passwordPlaceholder}
-              type={showPassword ? "text" : "password"}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
+            <TextField
+            {...register("otp", { required: "وارد کردن کد تایید است"})}
+            error={Boolean(errors.otp && errors.otp)}
+            helperText={errors.otp && errors.otp.message}
+            sx={{ mt: 2 }}
+            size="small"
+            fullWidth
+            label={loginData.otpPlaceholder}
+            type="text"
+          />
 
             <LoadingButton
               loading={isLoading}
@@ -108,22 +100,6 @@ const Login = () => {
             >
               <Typography variant="label1">{loginData.textButton}</Typography>
             </LoadingButton>
-
-            <Typography mt={2} variant="label3" display={"block"}>
-              {loginData.questionText}
-              <Typography
-                variant="label2"
-                component={Link}
-                replace
-                sx={{ textDecoration: "none" }}
-                color="inherit"
-                href={{
-                  pathname: routeLinks.register.url,
-                }}
-              >
-                {loginData.questionLinkText}
-              </Typography>
-            </Typography>
           </Card>
         </Box>
       </Container>

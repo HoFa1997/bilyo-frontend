@@ -6,7 +6,7 @@ export const registerApi = async (register: IRegister) => {
   try {
     return (
       await instanseAxios.post<IAuthResponse>(
-        `${HOST_URI}/auth/register`,
+        `${HOST_URI}/auth/getOtp`,
         register
       )
     ).data;
@@ -18,7 +18,7 @@ export const registerApi = async (register: IRegister) => {
 export const loginApi = async (login: ILogin) => {
   try {
     return (
-      await instanseAxios.post<IAuthResponse>(`${HOST_URI}/auth/login`, login)
+      await instanseAxios.post<IAuthResponse>(`${HOST_URI}/auth/checkOtp`, login)
     ).data;
   } catch (error) {
     console.error(error);

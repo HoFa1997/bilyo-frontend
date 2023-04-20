@@ -11,6 +11,7 @@ export const useLogin = () => {
     mutationKey: ["login"],
     mutationFn: (login: ILogin) => loginApi(login),
     onSuccess(data) {
+      console.log(data);
       if (!data) return console.log("AUTH FAILD");
       localStorage.setItem(tokenKey, data.token);
       push("/dashboard");
@@ -25,9 +26,11 @@ export const useRegister = () => {
     mutationKey: ["register"],
     mutationFn: (register: IRegister) => registerApi(register),
     onSuccess(data) {
+      console.log(data);
+      
       if (!data) return console.log("AUTH FAILD");
       localStorage.setItem(tokenKey, data.token);
-      push("/dashboard");
+      push("/login");
     },
   });
 };

@@ -36,8 +36,8 @@ export enum globalText {
 
 export enum loginData {
   title = "ورود به بیلیو",
-  emailPlaceholder = "ایمیل",
-  passwordPlaceholder = "رمز عبور",
+  mobilePlaceholder = "موبایل",
+  otpPlaceholder = "کد تایید",
   textButton = "ورود",
   questionText = "اکانت نداری ؟",
   questionLinkText = "بساز",
@@ -45,10 +45,7 @@ export enum loginData {
 
 export enum registerData {
   title = "ثبت نام برای بیلیو",
-  fullNamePlaceHolder = "نام کامل",
-  emailPlaceholder = "ایمیل",
-  passwordPlaceholder = "رمز عبور",
-  confrimPasswordPlaceholder = "تکرار رمز عبور",
+  mobilePlaceholder = "شماره موبایل",
   textButton = "ثبت نام",
   questionText = "اکانت داری ؟",
   questionLinkText = "وارد شو",

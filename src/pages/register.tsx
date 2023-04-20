@@ -44,51 +44,17 @@ const Register = () => {
           </Typography>
 
           <TextField
-            {...register("name", { required: "وارد کردن نام الزامی است" })}
-            error={Boolean(errors.name && errors.name)}
-            helperText={errors.name && errors.name.message}
+            {...register("mobile", { required: "وارد کردن شماره الزامی است", pattern: {
+              value: /^(\+98|0)?9\d{9}$/,
+              message: "لطفا شماره موبایل معتبر وارد کنید"
+            } })}
+            error={Boolean(errors.mobile && errors.mobile)}
+            helperText={errors.mobile && errors.mobile.message}
             sx={{ mt: 2 }}
             size="small"
             fullWidth
-            label={registerData.fullNamePlaceHolder}
+            label={registerData.mobilePlaceholder}
             type="text"
-          />
-
-          <TextField
-            {...register("email", { required: "وارد کردن نام الزامی است" })}
-            error={Boolean(errors.email && errors.email)}
-            helperText={errors.email && errors.email.message}
-            sx={{ mt: 2 }}
-            size="small"
-            fullWidth
-            label={registerData.emailPlaceholder}
-            type="email"
-          />
-
-          <TextField
-            {...register("password", { required: "وارد کردن رمز الزامی است" })}
-            error={Boolean(errors.password && errors.password)}
-            helperText={errors.password && errors.password.message}
-            sx={{ mt: 2 }}
-            size="small"
-            fullWidth
-            label={registerData.passwordPlaceholder}
-            type="password"
-          />
-
-          <TextField
-            {...register("password_confirm", {
-              required: "وارد کردن رمز الزامی است",
-            })}
-            error={Boolean(errors.password_confirm && errors.password_confirm)}
-            helperText={
-              errors.password_confirm && errors.password_confirm.message
-            }
-            sx={{ mt: 2 }}
-            size="small"
-            fullWidth
-            label={registerData.confrimPasswordPlaceholder}
-            type="password"
           />
 
           <LoadingButton
@@ -100,22 +66,6 @@ const Register = () => {
           >
             {registerData.textButton}
           </LoadingButton>
-
-          <Typography mt={2} variant="label3" display={"block"}>
-            {registerData.questionText}
-            <Typography
-              variant="label2"
-              component={Link}
-              replace
-              sx={{ textDecoration: "none" }}
-              color="inherit"
-              href={{
-                pathname: routeLinks.login.url,
-              }}
-            >
-              {registerData.questionLinkText}
-            </Typography>
-          </Typography>
         </Card>
       </Box>
     </form>

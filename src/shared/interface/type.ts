@@ -68,15 +68,12 @@ export interface IInvoiceLineItem {
 }
 
 export interface IRegister {
-  name: string;
-  email: string;
-  password: string;
-  password_confirm: string;
+  mobile: number
 }
 
 export interface ILogin {
-  email: string;
-  password: string;
+  mobile: number
+  otp: number;
 }
 
 export interface IPlanRes {
