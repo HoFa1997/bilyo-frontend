@@ -56,11 +56,11 @@ const CustomerForm: React.FC = () => {
       />
       <TextField
         {...register("address", {
-          required: "وارد کردن آدرس اول الزامی است",
+          required: "وارد کردن آدرس الزامی است",
         })}
         helperText={errors.address && errors.address.message}
         error={!!errors.address}
-        placeholder="آدرس اول"
+        placeholder="آدرس"
         type="text"
       />
 

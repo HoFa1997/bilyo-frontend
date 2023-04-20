@@ -46,7 +46,7 @@ const EditProductsPage: React.FC = () => {
   if (!data) return <Loading />;
 
   const onSubmit: SubmitHandler<ICreateProduct> = (editedData) => {
-    const { name, categories, description, price, qty } = editedData;
+    const { name, description, price, qty } = editedData;
     mutate({
       productId: data._id,
       data: {
