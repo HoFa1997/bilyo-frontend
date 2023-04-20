@@ -25,9 +25,7 @@ export const useRegister = () => {
   return useMutation({
     mutationKey: ["register"],
     mutationFn: (register: IRegister) => registerApi(register),
-    onSuccess(data) {
-      console.log(data);
-      
+    onSuccess(data) {      
       if (!data) return console.log("AUTH FAILD");
       localStorage.setItem(tokenKey, data.token);
       push("/login");

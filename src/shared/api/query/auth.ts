@@ -8,7 +8,7 @@ export const useValidatorQuery = () => {
     queryKey: ['isValidator'],
     queryFn: validatorApi,
     onError(err) {
-      push('/login');
+      push('/register');
     },
   });
 };
